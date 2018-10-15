@@ -9,6 +9,12 @@ point2<T>::point2(const T x, const T y) {
 }
 
 template <typename T>
+point2<T>::point2(const point2 &other) {
+    x = other.x;
+    y = other.y;
+}
+
+template <typename T>
 T point2<T>::getX() {
     return x;
 }

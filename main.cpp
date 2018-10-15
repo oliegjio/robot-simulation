@@ -7,22 +7,31 @@ clock_t current_time = clock();
 clock_t last_time = current_time;
 float dt = 0;
 
+std::vector<point2i_shape*> shapes;
+
 static void setup() {
-    
+    auto shape1 = point2i_shape::make_circle(150, 150, 300);
+    shapes.push_back(shape1);
+
+    auto shape2 = new point2i_shape(*shape1);
+    shape2->translate(50, 50);
+    shapes.push_back(shape2);
 }
 
 static void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     glPointSize(2.5);
 
-
+    for (const auto &shape : shapes) {
+        shape->draw();
+    }
 
     glutSwapBuffers();
 }
 
 static void reshape(int width, int height) {
     glViewport(0, 0, width, height);
-    
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0.0, WIN_WIDTH, 0.0, WIN_HEIGHT, -1.0, 1.0);
@@ -48,7 +57,7 @@ int main(int argc, char **argv) {
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
     glutCreateWindow("Robot Simulation");
-    
+
     glClearColor(1.0, 1.0, 1.0, 1.0);
 
     glutDisplayFunc(display);
