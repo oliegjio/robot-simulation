@@ -1,4 +1,4 @@
-#include "point.h"
+#include "point.hpp"
 
 #include <iostream>
 
@@ -66,6 +66,20 @@ point2<T> point2<T>::operator*(const T &number) {
 template <typename T>
 point2<T> point2<T>::operator/(const T &number) {
     return point2<T>(x / number, y / number);
+}
+
+template <typename T>
+point2<T> &point2<T>::operator+=(const point2<T> &other) {
+    x += other.x;
+    y += other.y;
+    return *this;
+}
+
+template <typename T>
+point2<T> &point2<T>::operator-=(const point2<T> &other) {
+    x -= other.x;
+    y -= other.y;
+    return *this;
 }
 
 template <typename T>

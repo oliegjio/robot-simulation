@@ -21,6 +21,9 @@ public:
     point2<T> operator*(const T &number);
     point2<T> operator/(const T &number);
 
+    point2<T> &operator+=(const point2<T> &other);
+    point2<T> &operator-=(const point2<T> &other);
+
     void print();
 
 private:
