@@ -5,12 +5,17 @@
 #include <cmath>
 #include <set>
 
+#include "rnd.hpp"
+
 template <typename T>
 point2_shape<T>::point2_shape () {}
 
 template <typename T>
 point2_shape<T>::point2_shape(const point2_shape &other) {
     points.insert(points.end(), other.points.begin(), other.points.end());
+    r = other.r;
+    g = other.g;
+    b = other.b;
 }
 
 template <typename T>
@@ -47,6 +52,41 @@ point2_shape<T> *point2_shape<T>::make_circle(const T &x,
         }
     }
     return circle;
+}
+
+template <typename T>
+static inline float distance(const point2<T> &from, const point2<T> &to) {
+    return std::sqrt(std::pow(from.x - to.x, 2) + std::pow(from.y - to.y, 2));
+}
+
+template <typename T>
+point2_shape<T> *point2_shape<T>::make_random(const T &x1,
+                                            const T &y1,
+                                            const T &x2,
+                                            const T &y2,
+                                            const size_t &number,
+                                            const T &delta)
+{
+    auto shape = new point2_shape<T>;
+    shape->points.reserve(number);
+    size_t generated = 0;
+    int distance_flag = 0;
+    while (generated != number) {
+        int x = rnd::in_range(x1, x2);
+        int y = rnd::in_range(y1, y2);
+        for (const auto &point : shape->points) {
+            if (distance(point2<T>(x, y), point) < delta) {
+                distance_flag = 1;
+                break;
+            }
+        }
+        if (distance_flag == 0) {
+            shape->points.push_back(point2<T>(x, y));
+            generated += 1;
+        }
+        distance_flag = 0;
+    }
+    return shape;
 }
 
 template <typename T>

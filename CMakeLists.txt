@@ -5,12 +5,14 @@ set(MY_SOURCES
     main.cpp
     point.cpp
     point2_shape.cpp
+    rnd.cpp
 )
 
 set(MY_HEADERS
     main.hpp
     point.hpp
     point2_shape.hpp
+    rnd.hpp
 )
 
 add_executable(robot-simulation ${MY_SOURCES} ${MY_HEADERS})

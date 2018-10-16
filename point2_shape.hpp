@@ -16,6 +16,12 @@ public:
     static point2_shape *make_circle(const T &x,
                                     const T &y,
                                     const T &radius);
+    static point2_shape *make_random(const T &x1,
+                                    const T &y1,
+                                    const T &x2,
+                                    const T &y2,
+                                    const size_t &number,
+                                    const T &delta);
 
     void translate(const T &x, const T &y);
     void rotate(const T &x, const T &y, const float &angle);

@@ -20,9 +20,13 @@ static void setup() {
     auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
     shape3->set_color(0, 0, 1);
 
+    auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 1000, 5);
+    shape4->set_color(0, 1, 1);
+
     shapes.push_back(shape3);
     shapes.push_back(shape1);
     shapes.push_back(shape2);
+    shapes.push_back(shape4);
 }
 
 static void display() {
