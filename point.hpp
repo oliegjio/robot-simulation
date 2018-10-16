@@ -6,30 +6,33 @@ public:
     point2(const T x, const T y);
     point2(const point2 &other);
 
-    T getX();
-    T getY();
+    T x;
+    T y;
 
-    void setX(const T x);
-    void setY(const T y);
-
-    point2<T> operator+(const point2<T> &other);
-    point2<T> operator-(const point2<T> &other);
-    point2<T> operator/(const point2<T> &other);
-    point2<T> operator*(const point2<T> &other);
-
-    point2<T> operator+(const T &number);
-    point2<T> operator-(const T &number);
-    point2<T> operator*(const T &number);
-    point2<T> operator/(const T &number);
+    point2<T> operator+(const point2<T> &other) const;
+    point2<T> operator-(const point2<T> &other) const;
+    point2<T> operator/(const point2<T> &other) const;
+    point2<T> operator*(const point2<T> &other) const;
 
     point2<T> &operator+=(const point2<T> &other);
     point2<T> &operator-=(const point2<T> &other);
+    point2<T> &operator/=(const point2<T> &other);
+    point2<T> &operator*=(const point2<T> &other);
+
+    point2<T> operator+(const T &number) const;
+    point2<T> operator-(const T &number) const;
+    point2<T> operator*(const T &number) const;
+    point2<T> operator/(const T &number) const;
+
+    point2<T> operator+=(const T &number);
+    point2<T> operator-=(const T &number);
+    point2<T> operator*=(const T &number);
+    point2<T> operator/=(const T &number);
+
+    bool operator==(const point2<T> &other) const;
+    bool operator<(const point2<T> &other) const;
 
     void print();
-
-private:
-    T x;
-    T y;
 };
 
 typedef point2<int> point2i;

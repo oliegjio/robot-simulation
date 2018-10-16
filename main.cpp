@@ -10,11 +10,18 @@ float dt = 0;
 std::vector<point2i_shape*> shapes;
 
 static void setup() {
-    auto shape1 = point2i_shape::make_circle(150, 150, 300);
-    shapes.push_back(shape1);
+    auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
+    shape1->rotate(0.3);
+    shape1->set_color(1, 0, 0);
 
-    auto shape2 = new point2i_shape(*shape1);
-    shape2->translate(50, 50);
+    auto shape2 = point2i_shape::make_circle(30, 30, 90);
+    shape2->set_color(0, 1, 0);
+
+    auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
+    shape3->set_color(0, 0, 1);
+
+    shapes.push_back(shape3);
+    shapes.push_back(shape1);
     shapes.push_back(shape2);
 }
 
@@ -66,6 +73,5 @@ int main(int argc, char **argv) {
 
     glutMainLoop();
 
-    auto shape1 = point2i_shape();
     return 0;
 }
