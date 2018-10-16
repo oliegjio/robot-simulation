@@ -19,10 +19,11 @@ point2_shape<T>::point2_shape(const point2_shape &other) {
 }
 
 template <typename T>
-point2_shape<T> *point2_shape<T>::make_rectangle(const T &x,
-                                                 const T &y,
-                                                 const T &width,
-                                                 const T &height)
+point2_shape<T> *point2_shape<T>::make_rectangle(
+    const T &x,
+    const T &y,
+    const T &width,
+    const T &height)
 {
     auto rectangle = new point2_shape<T>;
     rectangle->points.reserve(width * height);
@@ -35,9 +36,10 @@ point2_shape<T> *point2_shape<T>::make_rectangle(const T &x,
 }
 
 template <typename T>
-point2_shape<T> *point2_shape<T>::make_circle(const T &x,
-                                            const T &y,
-                                            const T &radius)
+point2_shape<T> *point2_shape<T>::make_circle(
+    const T &x,
+    const T &y,
+    const T &radius)
 {
     auto circle = new point2_shape<T>;
     circle->points.reserve(M_PI * std::pow(radius, 2));
@@ -60,28 +62,30 @@ static inline float distance(const point2<T> &from, const point2<T> &to) {
 }
 
 template <typename T>
-point2_shape<T> *point2_shape<T>::make_random(const T &x1,
-                                            const T &y1,
-                                            const T &x2,
-                                            const T &y2,
-                                            const size_t &number,
-                                            const T &delta)
+point2_shape<T> *point2_shape<T>::make_random(
+    const T &x1,
+    const T &y1,
+    const T &x2,
+    const T &y2,
+    const size_t &number,
+    const T &delta)
 {
     auto shape = new point2_shape<T>;
     shape->points.reserve(number);
     size_t generated = 0;
     int distance_flag = 0;
     while (generated != number) {
-        int x = rnd::in_range(x1, x2);
-        int y = rnd::in_range(y1, y2);
+        T x = rnd::in_range(x1, x2);
+        T y = rnd::in_range(y1, y2);
+        auto new_point = point2<T>(x, y);
         for (const auto &point : shape->points) {
-            if (distance(point2<T>(x, y), point) < delta) {
+            if (distance(new_point, point) < delta) {
                 distance_flag = 1;
                 break;
             }
         }
         if (distance_flag == 0) {
-            shape->points.push_back(point2<T>(x, y));
+            shape->points.push_back(new_point);
             generated += 1;
         }
         distance_flag = 0;
@@ -163,8 +167,9 @@ std::vector<point2<T>> point2_shape<T>::get_center_vectors() const {
 }
 
 template <typename T>
-point2_shape<T> *point2_shape<T>::minkowski_sum(const point2_shape<T> &source,
-                                                const point2_shape<T> &target)
+point2_shape<T> *point2_shape<T>::minkowski_sum(
+    const point2_shape<T> &source,
+    const point2_shape<T> &target)
 {
     std::set<point2<T>> set;
     std::vector<point2<T>> center_vectors = source.get_center_vectors();
@@ -177,6 +182,33 @@ point2_shape<T> *point2_shape<T>::minkowski_sum(const point2_shape<T> &source,
     shape->points.insert(shape->points.end(), set.begin(), set.end());
     return shape;
 }
+
+template <typename T>
+point2_shape<T> *point2_shape<T>::minkowski_sum2(
+    const point2_shape<T> &source,
+    const point2_shape<T> &target)
+{
+    std::set<point2<T>> set;
+    std::vector<point2<T>> center_vectors = source.get_center_vectors();
+    for (const auto &point1 : target.points) {
+        for (const auto &point2 : center_vectors) {
+            set.insert(point1 + point2);
+        }
+    }
+    auto shape = new point2_shape<T>;
+    shape->points.insert(shape->points.end(), set.begin(), set.end());
+    return shape;
+}
+
+template <typename T>
+std::vector<point2<T>> point2_shape<T>::get_points() const {
+    return points;
+}
+
+// template <typename T>
+// point2_shape<T> *point2_shape<T>::bazier_curve(const point2_shape<T> &points) {
+//
+// }
 
 template <typename T>
 void point2_shape<T>::set_color(float r, float g, float b) {

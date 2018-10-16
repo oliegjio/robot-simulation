@@ -13,6 +13,7 @@ set(MY_HEADERS
     point.hpp
     point2_shape.hpp
     rnd.hpp
+    delaunay.hpp
 )
 
 add_executable(robot-simulation ${MY_SOURCES} ${MY_HEADERS})

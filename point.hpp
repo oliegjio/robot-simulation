@@ -29,10 +29,12 @@ public:
     point2<T> operator*=(const T &number);
     point2<T> operator/=(const T &number);
 
+    point2<T> &operator=(const point2<T> &other);
     bool operator==(const point2<T> &other) const;
     bool operator<(const point2<T> &other) const;
+    bool operator>(const point2<T> &other) const;
 
-    void print();
+    void print() const;
 };
 
 typedef point2<int> point2i;

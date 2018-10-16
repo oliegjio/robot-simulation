@@ -83,7 +83,7 @@ point2<T> &point2<T>::operator*=(const point2<T> &other) {
 }
 
 template <typename T>
-void point2<T>::print() {
+void point2<T>::print() const {
     std::cout << "(" << x << ", " << y << ")" << std::endl;
 }
 
@@ -138,6 +138,41 @@ bool point2<T>::operator<(const point2<T> &other) const {
         }
     }
 }
+
+template <typename T>
+bool point2<T>::operator>(const point2<T> &other) const {
+    if (x > other.x) {
+        return true;
+    } else if (x > other.x) {
+        return false;
+    } else {
+        if (y > other.y) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+template <typename T>
+point2<T> &point2<T>::operator=(const point2<T> &other) {
+    if (this == &other) {
+        return *this;
+    }
+    x = other.x;
+    y = other.y;
+    return *this;
+}
+
+// template <typename T>
+// point2<T> &point2<T>::operator=(point2<T> other) {
+//     if (this == &other) {
+//         return *this;
+//     }
+//     x = other.x;
+//     y = other.y;
+//     return *this;
+// }
 
 template class point2<int>;
 template class point2<float>;

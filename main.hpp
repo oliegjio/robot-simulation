@@ -4,3 +4,4 @@
 #include <vector>
 
 #include "point2_shape.hpp"
+#include "delaunay.hpp"

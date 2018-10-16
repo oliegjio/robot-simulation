@@ -14,7 +14,7 @@ static void setup() {
     shape1->rotate(0.3);
     shape1->set_color(1, 0, 0);
 
-    auto shape2 = point2i_shape::make_circle(30, 30, 90);
+    auto shape2 = point2i_shape::make_circle(30, 30, 180);
     shape2->set_color(0, 1, 0);
 
     auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
@@ -22,6 +22,9 @@ static void setup() {
 
     auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 1000, 5);
     shape4->set_color(0, 1, 1);
+
+    auto points = shape4->get_points();
+    delaunay::triangulate(points);
 
     shapes.push_back(shape3);
     shapes.push_back(shape1);
