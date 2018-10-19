@@ -23,7 +23,7 @@ static void setup() {
     auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
     shape3->set_color(0, 0, 1);
 
-    auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 20, 50);
+    auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 150, 25);
     shape4->set_color(0, 1, 1);
     points = shape4->get_points();
 
@@ -43,15 +43,16 @@ static void display() {
         shape->draw();
     }
 
-    glPointSize(6);
-    glColor3f(0, 0, 0);
+	glColor3f(0, 0, 0);
+	draw_lines(*lines);
+
+    glPointSize(4);
+    glColor3f(1, 0, 1);
     glBegin(GL_POINTS);
     for (const auto &p : points) {
         glVertex2f(p.getX(), p.getY());
     }
     glEnd();
-
-    draw_lines(*lines);
 
     glutSwapBuffers();
 }
