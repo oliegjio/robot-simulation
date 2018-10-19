@@ -2,12 +2,14 @@
 
 #include "point.hpp"
 
+#ifdef _WIN32
+    #include <windows.h>
+#endif
+#include <GL/glut.h>
 #include <vector>
 #include <list>
 #include <algorithm>
 #include <utility>
-
-#include <GL/glut.h>
 
 template <typename T>
 struct triangle2 {

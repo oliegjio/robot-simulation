@@ -1,4 +1,6 @@
-#include <GL/glu.h>
+#ifdef _WIN32
+     #include <windows.h>
+#endif
 #include <GL/glut.h>
 #include <ctime>
 #include <vector>

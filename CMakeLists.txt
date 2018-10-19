@@ -16,6 +16,21 @@ set(MY_HEADERS
     delaunay.hpp
 )
 
+if (WIN32)
+    include_directories("include")
+    link_directories("lib")
+endif (WIN32)
+
 add_executable(robot-simulation ${MY_SOURCES} ${MY_HEADERS})
 
-target_link_libraries(robot-simulation GL GLU glut)
+if (WIN32)
+    target_link_libraries(robot-simulation freeglut)
+	add_custom_command(TARGET robot-simulation POST_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy_directory
+			"${PROJECT_SOURCE_DIR}/lib"
+			"$<TARGET_FILE_DIR:robot-simulation>")
+endif (WIN32)
+
+if (UNIX)
+    target_link_libraries(robot-simulation GL GLU glut)
+endif (UNIX)

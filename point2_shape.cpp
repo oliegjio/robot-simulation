@@ -1,11 +1,16 @@
 #include "point2_shape.hpp"
 
-#include <GL/glu.h>
+#ifdef _WIN32
+    #include <windows.h>
+#endif
+#include <GL/glut.h>
 #include <iostream>
 #include <cmath>
 #include <set>
 
 #include "rnd.hpp"
+
+#define PI 3.14159265359
 
 template <typename T>
 point2_shape<T>::point2_shape () {}
@@ -42,7 +47,7 @@ point2_shape<T> *point2_shape<T>::make_circle(
     const T &radius)
 {
     auto circle = new point2_shape<T>;
-    circle->points.reserve(M_PI * std::pow(radius, 2));
+    circle->points.reserve(PI * std::pow(radius, 2));
     T diamiter = radius * 2;
     for (T i = -diamiter; i < diamiter; i++) {
         for (T j = -diamiter; j < diamiter; j++) {
