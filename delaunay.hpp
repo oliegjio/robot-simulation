@@ -5,7 +5,6 @@
 #include <vector>
 #include <list>
 #include <algorithm>
-#include <iostream>
 #include <utility>
 
 #include <GL/glut.h>
@@ -107,10 +106,8 @@ std::vector<triangle2<T>*> *delaunay::triangulate(
     auto result = new std::vector<triangle2<T>*>;
     std::list<line2> hull;
 
-    // Get first triangle:
     auto first_triangle = new triangle2<T>;
-    side side = get_side(points[0], points[1], points[2]);
-    if (side == side::left) {
+    if (get_side(points[0], points[1], points[2]) == side::left) {
         first_triangle->vertices.push_back(&points[0]);
         first_triangle->vertices.push_back(&points[1]);
         first_triangle->vertices.push_back(&points[2]);

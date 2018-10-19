@@ -13,45 +13,35 @@ auto points = std::vector<point2i>();
 std::vector<triangle2<int>*> *triangles;
 
 static void setup() {
-    // auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
-    // shape1->rotate(0.3);
-    // shape1->set_color(1, 0, 0);
-    //
-    // auto shape2 = point2i_shape::make_circle(30, 30, 180);
-    // shape2->set_color(0, 1, 0);
-    //
-    // auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
-    // shape3->set_color(0, 0, 1);
-    //
-    // auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 100, 15);
-    // shape4->set_color(0, 1, 1);
-    // auto points = shape4->get_points();
+    auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
+    shape1->rotate(0.3);
+    shape1->set_color(1, 0, 0);
 
-    points.push_back(point2i(200, 200));
-    points.push_back(point2i(220, 150));
-    points.push_back(point2i(240, 180));
-    points.push_back(point2i(260, 260));
-    points.push_back(point2i(300, 160));
-    // points.push_back(point2i(320, 100));
-    points.push_back(point2i(320, 200));
-    points.push_back(point2i(330, 120));
-    points.push_back(point2i(360, 140));
+    auto shape2 = point2i_shape::make_circle(30, 30, 180);
+    shape2->set_color(0, 1, 0);
+
+    auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
+    shape3->set_color(0, 0, 1);
+
+    auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 50, 15);
+    shape4->set_color(0, 1, 1);
+    points = shape4->get_points();
 
     triangles = delaunay::triangulate(points);
 
-    // shapes.push_back(shape3);
-    // shapes.push_back(shape1);
-    // shapes.push_back(shape2);
-    // shapes.push_back(shape4);
+    shapes.push_back(shape3);
+    shapes.push_back(shape1);
+    shapes.push_back(shape2);
+    shapes.push_back(shape4);
 }
 
 static void display() {
     glClear(GL_COLOR_BUFFER_BIT);
-    // glPointSize(2.5);
+    glPointSize(2.5);
 
-    // for (const auto &shape : shapes) {
-    //     shape->draw();
-    // }
+    for (const auto &shape : shapes) {
+        shape->draw();
+    }
 
     glPointSize(6);
     glColor3f(0, 0, 0);
@@ -62,11 +52,6 @@ static void display() {
     glEnd();
 
     draw_triangles(triangles);
-
-    glColor3f(1, 0, 0);
-    glBegin(GL_POINTS);
-    glVertex2f(points[5].x, points[5].y);
-    glEnd();
 
     glutSwapBuffers();
 }
