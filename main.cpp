@@ -23,18 +23,19 @@ static void setup() {
     // auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
     // shape3->set_color(0, 0, 1);
     //
-    // auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 1000, 5);
+    // auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 100, 15);
     // shape4->set_color(0, 1, 1);
     // auto points = shape4->get_points();
 
-    points.push_back(point2i(100, 100) * 2);
-    points.push_back(point2i(110, 75) * 2);
-    points.push_back(point2i(120, 85) * 2);
-    points.push_back(point2i(130, 130) * 2);
-    points.push_back(point2i(150, 80) * 2);
-    points.push_back(point2i(160, 50) * 2);
-    points.push_back(point2i(165, 60) * 2);
-    points.push_back(point2i(180, 70) * 2);
+    points.push_back(point2i(200, 200));
+    points.push_back(point2i(220, 150));
+    points.push_back(point2i(240, 180));
+    points.push_back(point2i(260, 260));
+    points.push_back(point2i(300, 160));
+    // points.push_back(point2i(320, 100));
+    points.push_back(point2i(320, 200));
+    points.push_back(point2i(330, 120));
+    points.push_back(point2i(360, 140));
 
     triangles = delaunay::triangulate(points);
 
@@ -61,6 +62,11 @@ static void display() {
     glEnd();
 
     draw_triangles(triangles);
+
+    glColor3f(1, 0, 0);
+    glBegin(GL_POINTS);
+    glVertex2f(points[5].x, points[5].y);
+    glEnd();
 
     glutSwapBuffers();
 }

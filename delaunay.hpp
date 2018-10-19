@@ -79,6 +79,22 @@ void draw_triangles(const std::vector<triangle2<T>*> *triangles) {
 }
 
 template <typename T>
+static bool operator==(
+    const std::pair<point2<T>*, point2<T>*> &left,
+    const std::pair<point2<T>*, point2<T>*> &right)
+{
+    if (left.first->x == right.first->x &&
+        left.first->y == right.first->y &&
+        left.second->x == right.second->x &&
+        left.second->y == right.second->y)
+    {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+template <typename T>
 std::vector<triangle2<T>*> *delaunay::triangulate(
     std::vector<point2<T>> &points)
 {
@@ -111,10 +127,9 @@ std::vector<triangle2<T>*> *delaunay::triangulate(
     }
     result->push_back(first_triangle);
 
-    auto it = hull.begin();
     for (size_t i = 3; i < points.size(); i++) {
-        // size_t hull_size = hull.size();
-        for (it = hull.begin(); it != hull.end(); ++it) {
+        auto it = hull.begin();
+        while (true) {
             if (side::right == get_side(*it->first, *it->second, points[i])) {
                 auto new_triangle = new triangle2<T>;
                 new_triangle->vertices.push_back(it->first);
@@ -122,82 +137,45 @@ std::vector<triangle2<T>*> *delaunay::triangulate(
                 new_triangle->vertices.push_back(it->second);
                 result->push_back(new_triangle);
 
-                it = hull.erase(it);
-                if (it == hull.end()) {
+                auto top_line = line2(&points[i], it->second);
+                auto bottom_line = line2(it->first, &points[i]);
+
+                auto top_line_r = line2(it->second, &points[i]);
+                auto bottom_line_r = line2(&points[i], it->first);
+
+                it = prev_iter<line2>(it, hull.begin(), hull.end());
+                if (*it == bottom_line_r)
+                {
+                    if ((it = hull.erase(it)) == hull.end()) {
+                        it = hull.begin();
+                    }
+                } else {
+                    it = next_iter<line2>(it, hull.begin(), hull.end());
+                    it = hull.insert(it, bottom_line);
                     it = next_iter<line2>(it, hull.begin(), hull.end());
                 }
 
-                auto top_line = line2(&points[i], it->second);
-                if (it->first->x == top_line.first->x &&
-                    it->first->y == top_line.first->y &&
-                    it->second->x == top_line.second->x &&
-                    it->second->y == top_line.second->y)
+                it = next_iter<line2>(it, hull.begin(), hull.end());
+                if (*it == top_line_r)
                 {
-                    it = hull.erase(it);
-                    it = next_iter<line2>(it, hull.begin(), hull.end());
+                    if ((it = hull.erase(it)) == hull.end()) {
+                        it = hull.begin();
+                    }
+                    it = prev_iter<line2>(it, hull.begin(), hull.end());
                 } else {
                     it = hull.insert(it, top_line);
+                    it = prev_iter<line2>(it, hull.begin(), hull.end());
                 }
 
-                auto bottom_line = line2(it->first, &points[i]);
-                if (it->first->x == bottom_line.first->x &&
-                    it->first->y == bottom_line.first->y &&
-                    it->second->x == bottom_line.second->x &&
-                    it->second->y == bottom_line.second->y)
-                {
-                    it = hull.erase(it);
-                    it = next_iter<line2>(it, hull.begin(), hull.end());
-                } else {
-                    it = hull.insert(it, bottom_line);
+                if ((it = hull.erase(it)) == hull.end()) {
+                    it = hull.begin();
                 }
-
-                it = hull.begin();
+            }
+            it = next_iter<line2>(it, hull.begin(), hull.end());
+            if (it == hull.begin()) {
+                break;
             }
         }
-        // for (size_t j = 0; j < hull_size * 2; j++) {
-        //     if (side::right == get_side(*it->first, *it->second, points[i])) {
-        //         auto new_triangle = new triangle2<T>;
-        //         new_triangle->vertices.push_back(it->first);
-        //         new_triangle->vertices.push_back(&points[i]);
-        //         new_triangle->vertices.push_back(it->second);
-        //         result->push_back(new_triangle);
-        //
-        //         it = hull.erase(it);
-        //         it = next_iter<line2>(it, hull.begin(), hull.end());
-        //
-        //         auto top_line = line2(&points[i], it->second);
-        //         if (it->first->x == top_line.first->x &&
-        //             it->first->y == top_line.first->y &&
-        //             it->second->x == top_line.second->x &&
-        //             it->second->y == top_line.second->y)
-        //         {
-        //             std::cout << "TL" << std::endl;
-        //             it = hull.erase(it);
-        //             it = next_iter<line2>(it, hull.begin(), hull.end());
-        //         } else {
-        //             it = hull.insert(it, top_line);
-        //         }
-        //
-        //         // it = hull.erase(it);
-        //         // it = next_iter<line2>(it, hull.begin(), hull.end());
-        //         // it = hull.insert(it, line2(&points[i], it->second));
-        //         // it = prev_iter<line2>(it, hull.begin(),3 hull.end());
-        //
-        //         auto bottom_line = line2(it->first, &points[i]);
-        //         if (it->first->x == bottom_line.first->x &&
-        //             it->first->y == bottom_line.first->y &&
-        //             it->second->x == bottom_line.second->x &&
-        //             it->second->y == bottom_line.second->y)
-        //         {
-        //             std::cout << "BL" << std::endl;
-        //             it = hull.erase(it);
-        //             it = next_iter<line2>(it, hull.begin(), hull.end());
-        //         } else {
-        //             it = hull.insert(it, bottom_line);
-        //         }
-        //     }
-        //     it = next_iter<line2>(it, hull.begin(), hull.end());
-        // }
     }
 
     return result;
