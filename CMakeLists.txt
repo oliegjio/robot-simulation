@@ -24,13 +24,13 @@ endif (WIN32)
 add_executable("robot-simulation" ${MY_SOURCES} ${MY_HEADERS})
 
 if (WIN32)
-    target_link_libraries("robot-simulation" freeglut)
+    target_link_libraries("robot-simulation" "freeglut")
 	add_custom_command(TARGET "robot-simulation" POST_BUILD
-		COMMAND ${CMAKE_COMMAND} -E copy_directory
+		COMMAND ${CMAKE_COMMAND} "-E copy_directory"
 			"${PROJECT_SOURCE_DIR}/dll"
 			"$<TARGET_FILE_DIR:robot-simulation>")
 endif (WIN32)
 
 if (UNIX)
-    target_link_libraries(robot-simulation GL GLU "glut")
+    target_link_libraries("robot-simulation" "GL" "GLU" "glut")
 endif (UNIX)
