@@ -1,4 +1,4 @@
-#include "rnd.hpp"
+#include "rnd.h"
 
 #include <cstdlib>
 

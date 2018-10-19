@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "point.hpp"
+#include "point.h"
 
 template <typename T>
 class point2_shape {

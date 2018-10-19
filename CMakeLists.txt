@@ -9,11 +9,11 @@ set(MY_SOURCES
 )
 
 set(MY_HEADERS
-    "main.hpp"
-    "point.hpp"
-    "point2_shape.hpp"
-    "rnd.hpp"
-    "delaunay.hpp"
+    "main.h"
+    "point.h"
+    "point2_shape.h"
+    "rnd.h"
+    "triangulation.h"
 )
 
 if (WIN32)

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "point.hpp"
-
 #ifdef _WIN32
     #include <windows.h>
 #endif
@@ -11,16 +9,12 @@
 #include <algorithm>
 #include <utility>
 
+#include "point.h"
+
 template <typename T>
 struct triangle2 {
     std::vector<point2<T>*> vertices;
-    std::vector<triangle2<T>*> triangles;
 };
-
-namespace delaunay {
-    template <typename T>
-    std::vector<triangle2<T>*> *triangulate(std::vector<point2<T>> &points);
-}
 
 enum side {
     left = 0,
@@ -96,7 +90,7 @@ static bool operator==(
 }
 
 template <typename T>
-std::vector<triangle2<T>*> *delaunay::triangulate(
+std::vector<triangle2<T>*> *triangulate(
     std::vector<point2<T>> &points)
 {
     typedef std::pair<point2<T>*, point2<T>*> line2;

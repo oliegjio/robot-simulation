@@ -1,4 +1,4 @@
-#include "point2_shape.hpp"
+#include "point2_shape.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -8,7 +8,7 @@
 #include <cmath>
 #include <set>
 
-#include "rnd.hpp"
+#include "rnd.h"
 
 #define PI 3.14159265359
 
@@ -125,7 +125,7 @@ void point2_shape<T>::rotate(const float &angle) {
     translate(-center.x, -center.y);
     for (auto &point : points) {
         point += point2<T>(point.x * cos - point.y * sin,
-                            point.x * sin + point.y * cos);
+			point.x * sin + point.y * cos);
     }
     translate(center.x, center.y);
 }
@@ -210,10 +210,12 @@ std::vector<point2<T>> point2_shape<T>::get_points() const {
     return points;
 }
 
-// template <typename T>
-// point2_shape<T> *point2_shape<T>::bazier_curve(const point2_shape<T> &points) {
-//
-// }
+ template <typename t>
+ point2_shape<t> *point2_shape<t>::bazier_curve(const point2_shape<t> &points) {
+	 auto result = new point2_shape;
+
+	 return result;
+ }
 
 template <typename T>
 void point2_shape<T>::set_color(float r, float g, float b) {

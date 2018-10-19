@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "main.h"
 
 #define WIN_WIDTH 400
 #define WIN_HEIGHT 400
@@ -23,11 +23,11 @@ static void setup() {
     auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
     shape3->set_color(0, 0, 1);
 
-    auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 50, 15);
+    auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 20, 50);
     shape4->set_color(0, 1, 1);
     points = shape4->get_points();
 
-    triangles = delaunay::triangulate(points);
+    triangles = triangulate(points);
 
     shapes.push_back(shape3);
     shapes.push_back(shape1);

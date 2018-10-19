@@ -5,5 +5,5 @@
 #include <ctime>
 #include <vector>
 
-#include "point2_shape.hpp"
-#include "delaunay.hpp"
+#include "point2_shape.h"
+#include "triangulation.h"
