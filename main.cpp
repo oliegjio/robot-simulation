@@ -10,7 +10,7 @@ float dt = 0;
 std::vector<point2i_shape*> shapes;
 
 auto points = std::vector<point2i>();
-std::vector<triangle2<int>*> *triangles;
+std::vector<line2i> *lines;
 
 static void setup() {
     auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
@@ -27,7 +27,7 @@ static void setup() {
     shape4->set_color(0, 1, 1);
     points = shape4->get_points();
 
-    triangles = triangulate(points);
+	lines = triangulate(points);
 
     shapes.push_back(shape3);
     shapes.push_back(shape1);
@@ -47,11 +47,11 @@ static void display() {
     glColor3f(0, 0, 0);
     glBegin(GL_POINTS);
     for (const auto &p : points) {
-        glVertex2f(p.x, p.y);
+        glVertex2f(p.getX(), p.getY());
     }
     glEnd();
 
-    draw_triangles(triangles);
+    draw_lines(*lines);
 
     glutSwapBuffers();
 }

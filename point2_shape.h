@@ -42,6 +42,7 @@ public:
     void set_color(float r, float g, float b);
 
     std::vector<point2<T>> get_points() const;
+	void set_points(const std::vector<point2<T>> &points);
 
 private:
     point2_shape();

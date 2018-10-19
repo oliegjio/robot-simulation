@@ -14,6 +14,7 @@ set(MY_HEADERS
     "point2_shape.h"
     "rnd.h"
     "triangulation.h"
+	"triangulation2.h"
 )
 
 if (WIN32)
