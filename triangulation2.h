@@ -7,15 +7,9 @@
 #include <vector>
 #include <list>
 #include <algorithm>
-#include <utility>
 
 #include "point.h"
-
-template <typename T>
-using line2 = std::pair<point2<T>, point2<T>>;
-
-typedef line2<int> line2i;
-typedef line2<float> line2f;
+#include "line.h"
 
 namespace {
 	enum side {
@@ -29,8 +23,10 @@ static side get_side(
     const line2<T> &line,
     const point2<T> &point)
 {
-    T value = (point.getX() - line.first.getX()) * (line.second.getY() - line.first.getY()) -
-        (point.getY() - line.first.getY()) * (line.second.getX() - line.first.getX());
+    T value = (point.getX() - line.getFirst().getX()) *
+		(line.getSecond().getY() - line.getFirst().getY()) -
+        (point.getY() - line.getFirst().getY()) *
+		(line.getSecond().getX() - line.getFirst().getX());
     return value <= 0 ? side::left : side::right;
 }
 
@@ -64,8 +60,8 @@ template <typename T>
 void draw_lines(const std::vector<line2<T>> &lines) {
     glBegin(GL_LINES);
     for (const auto &line : lines) {
-		glVertex2f(line.first.getX(), line.first.getY());
-		glVertex2f(line.second.getX(), line.second.getY());
+		glVertex2f(line.getFirst().getX(), line.getFirst().getY());
+		glVertex2f(line.getSecond().getX(), line.getSecond().getY());
     }
     glEnd();
 }
@@ -98,15 +94,14 @@ std::vector<line2<T>> *triangulate(
         auto it = hull.begin();
         while (true) {
             if (side::right == get_side(*it, points[i])) {
-				result->push_back(line2<T>(it->first, points[i]));
-				result->push_back(line2<T>(points[i], it->second));
-				result->push_back(line2<T>(it->second, it->first));
+				result->push_back(line2<T>(it->getFirst(), points[i]));
+				result->push_back(line2<T>(points[i], it->getSecond()));
 
-                auto top_line = line2<T>(points[i], it->second);
-                auto bottom_line = line2<T>(it->first, points[i]);
+                auto top_line = line2<T>(points[i], it->getSecond());
+                auto bottom_line = line2<T>(it->getFirst(), points[i]);
 
-                auto top_line_r = line2<T>(it->second, points[i]);
-                auto bottom_line_r = line2<T>(points[i], it->first);
+                auto top_line_r = line2<T>(it->getSecond(), points[i]);
+                auto bottom_line_r = line2<T>(points[i], it->getFirst());
 
                 it = prev_iter<line2<T>>(it, hull.begin(), hull.end());
                 if (*it == bottom_line_r)

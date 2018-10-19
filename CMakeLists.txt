@@ -6,6 +6,7 @@ set(MY_SOURCES
     "point.cpp"
     "point2_shape.cpp"
     "rnd.cpp"
+	"line.cpp"
 )
 
 set(MY_HEADERS
@@ -13,8 +14,8 @@ set(MY_HEADERS
     "point.h"
     "point2_shape.h"
     "rnd.h"
-    "triangulation.h"
 	"triangulation2.h"
+	"line.h"
 )
 
 if (WIN32)

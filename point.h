@@ -3,7 +3,7 @@
 template <typename T>
 class point2 {
 public:
-    point2(const T x, const T y);
+    point2(const T &x, const T &y);
     point2(const point2 &other);
 
 	T getX() const;

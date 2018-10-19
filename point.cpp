@@ -3,7 +3,7 @@
 #include <iostream>
 
 template <typename T>
-point2<T>::point2(const T x, const T y) {
+point2<T>::point2(const T &x, const T &y) {
     this->x = x;
     this->y = y;
 }
