@@ -7,13 +7,13 @@ clock_t current_time = clock();
 clock_t last_time = current_time;
 float dt = 0;
 
-std::vector<point2i_shape*> shapes;
+//std::vector<point2i_shape*> shapes;
 
-auto points = std::vector<point2i>();
-std::vector<line2i> *lines;
+//auto points = std::vector<point2i>();
+//std::vector<line2i> *lines;
 
 static void setup() {
-    auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
+    /*auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
     shape1->rotate(0.3);
     shape1->set_color(1, 0, 0);
 
@@ -32,14 +32,16 @@ static void setup() {
     shapes.push_back(shape3);
     shapes.push_back(shape1);
     shapes.push_back(shape2);
-    shapes.push_back(shape4);
+    shapes.push_back(shape4);*/
+
+	auto test_line = line2<int>(point2<int>(1, 1), point2<int>(2, 2));
 }
 
 static void display() {
     glClear(GL_COLOR_BUFFER_BIT);
     glPointSize(2.5);
 
-    for (const auto &shape : shapes) {
+    /*for (const auto &shape : shapes) {
         shape->draw();
     }
 
@@ -52,7 +54,7 @@ static void display() {
     for (const auto &p : points) {
         glVertex2f(p.getX(), p.getY());
     }
-    glEnd();
+    glEnd();*/
 
     glutSwapBuffers();
 }

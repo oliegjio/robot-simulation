@@ -4,18 +4,18 @@ project("robot-simulation")
 set(MY_SOURCES
     "main.cpp"
     "point.cpp"
-    "line.cpp"
-    "point2_shape.cpp"
-    "rnd.cpp"
+    # "point2_shape.cpp"
+    # "rnd.cpp"
+	"line.cpp"
 )
 
 set(MY_HEADERS
     "main.h"
     "point.h"
-    "line.h"
-    "point2_shape.h"
-    "rnd.h"
-	"triangulation2.h"
+    # "point2_shape.h"
+    # "rnd.h"
+	# "triangulation2.h"
+	"line.h"
 )
 
 if (WIN32)
