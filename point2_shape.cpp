@@ -166,7 +166,7 @@ std::vector<point2<T>> point2_shape<T>::get_center_vectors() const {
     vectors.reserve(points.size());
     auto center = get_center();
     for (const auto &point : points) {
-        vectors.push_back(point2<T>(point.getX() - center.getX(), point.getY() - center.getY()));
+        vectors.push_back(point - center);
     }
     return vectors;
 }
