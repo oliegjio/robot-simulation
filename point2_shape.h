@@ -9,11 +9,13 @@ class point2_shape {
 public:
     point2_shape(const point2_shape &other);
 
-    static point2_shape *make_rectangle(const T &x,
+    static point2_shape *make_rectangle(
+		const T &x,
         const T &y,
         const T &width,
         const T &height);
-    static point2_shape *make_circle(const T &x,
+    static point2_shape *make_circle(
+		const T &x,
         const T &y,
         const T &radius);
     static point2_shape *make_random(
@@ -25,7 +27,6 @@ public:
         const T &delta);
 
     void translate(const T &x, const T &y);
-    void rotate(const T &x, const T &y, const float &angle);
     void rotate(const float &angle);
 
     static point2_shape<T> *minkowski_sum(
@@ -36,10 +37,9 @@ public:
         const point2_shape<T> &target);
     static point2_shape<T> *bazier_curve(const point2_shape<T> &points);
 
-    void draw(float r, float g, float b) const;
     void draw() const;
 
-    void set_color(float r, float g, float b);
+    void set_color(const float &r, const float &g, const float &b);
 
     std::vector<point2<T>> get_points() const;
 	void set_points(const std::vector<point2<T>> &points);
@@ -54,7 +54,7 @@ private:
     float b = 0;
 
     point2<T> get_center() const;
-    std::vector<point2<T>> get_center_vectors() const;
+    std::vector<point2<T>> *get_center_vectors() const;
 };
 
 typedef point2_shape<int> point2i_shape;

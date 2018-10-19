@@ -11,27 +11,28 @@ public:
 	void setX(const T &x);
 	void setY(const T &y);
 
+	point2<T> &operator=(const point2<T> &other);
+
     point2<T> operator+(const point2<T> &other) const;
     point2<T> operator-(const point2<T> &other) const;
     point2<T> operator/(const point2<T> &other) const;
     point2<T> operator*(const point2<T> &other) const;
+
+	point2<T> operator+(const T &number) const;
+	point2<T> operator-(const T &number) const;
+	point2<T> operator*(const T &number) const;
+	point2<T> operator/(const T &number) const;
 
     point2<T> &operator+=(const point2<T> &other);
     point2<T> &operator-=(const point2<T> &other);
 	point2<T> &operator*=(const point2<T> &other);
     point2<T> &operator/=(const point2<T> &other);
 
-    point2<T> operator+(const T &number) const;
-    point2<T> operator-(const T &number) const;
-    point2<T> operator*(const T &number) const;
-    point2<T> operator/(const T &number) const;
-
     point2<T> &operator+=(const T &number);
     point2<T> &operator-=(const T &number);
     point2<T> &operator*=(const T &number);
     point2<T> &operator/=(const T &number);
 
-    point2<T> &operator=(const point2<T> &other);
     bool operator==(const point2<T> &other) const;
     bool operator<(const point2<T> &other) const;
     bool operator>(const point2<T> &other) const;

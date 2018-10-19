@@ -62,7 +62,7 @@ point2_shape<T> *point2_shape<T>::make_circle(
 }
 
 template <typename T>
-static inline float distance(const point2<T> &from, const point2<T> &to) {
+static float distance(const point2<T> &from, const point2<T> &to) {
     return std::sqrt(std::pow(from.getX() - to.getX(), 2) + std::pow(from.getY() - to.getY(), 2));
 }
 
@@ -106,18 +106,6 @@ void point2_shape<T>::translate(const T &x, const T &y) {
 }
 
 template <typename T>
-void point2_shape<T>::rotate(const T &x, const T &y, const float &angle) {
-    float cos = std::cos(angle);
-    float sin = std::sin(angle);
-    translate(-x, -y);
-    for (auto &point : points) {
-        point += point2<T>(point.getX() * cos - point.getY() * sin,
-                            point.getX() * sin + point.getY() * cos);
-    }
-    translate(x, y);
-}
-
-template <typename T>
 void point2_shape<T>::rotate(const float &angle) {
     float cos = std::cos(angle);
     float sin = std::sin(angle);
@@ -131,20 +119,10 @@ void point2_shape<T>::rotate(const float &angle) {
 }
 
 template <typename T>
-void point2_shape<T>::draw(float r, float g, float b) const {
-    glColor3f(r, g, b);
-    glBegin(GL_POINTS);
-    for (auto &point : points) {
-        glVertex2f(point.getX(), point.getY());
-    }
-    glEnd();
-}
-
-template <typename T>
 void point2_shape<T>::draw() const {
     glColor3f(r, g, b);
     glBegin(GL_POINTS);
-    for (auto &point : points) {
+    for (const auto &point : points) {
         glVertex2f(point.getX(), point.getY());
     }
     glEnd();
@@ -161,12 +139,12 @@ point2<T> point2_shape<T>::get_center() const {
 }
 
 template <typename T>
-std::vector<point2<T>> point2_shape<T>::get_center_vectors() const {
-    std::vector<point2<T>> vectors;
-    vectors.reserve(points.size());
+std::vector<point2<T>> *point2_shape<T>::get_center_vectors() const {
+    auto vectors = new std::vector<point2<T>>;
+    vectors->reserve(points.size());
     auto center = get_center();
     for (const auto &point : points) {
-        vectors.push_back(point - center);
+        vectors->push_back(point - center);
     }
     return vectors;
 }
@@ -177,9 +155,9 @@ point2_shape<T> *point2_shape<T>::minkowski_sum(
     const point2_shape<T> &target)
 {
     std::set<point2<T>> set;
-    std::vector<point2<T>> center_vectors = source.get_center_vectors();
+    std::vector<point2<T>> *center_vectors = source.get_center_vectors();
     for (const auto &point1 : target.points) {
-        for (const auto &point2 : center_vectors) {
+        for (const auto &point2 : *center_vectors) {
             set.insert(point1 + point2);
         }
     }
@@ -194,9 +172,9 @@ point2_shape<T> *point2_shape<T>::minkowski_sum2(
     const point2_shape<T> &target)
 {
     std::set<point2<T>> set;
-    std::vector<point2<T>> center_vectors = source.get_center_vectors();
+    std::vector<point2<T>> *center_vectors = source.get_center_vectors();
     for (const auto &point1 : target.points) {
-        for (const auto &point2 : center_vectors) {
+        for (const auto &point2 : *center_vectors) {
             set.insert(point1 + point2);
         }
     }
@@ -223,7 +201,7 @@ void point2_shape<T>::set_points(const std::vector<point2<T>> &points) {
  }
 
 template <typename T>
-void point2_shape<T>::set_color(float r, float g, float b) {
+void point2_shape<T>::set_color(const float &r, const float &g, const float &b) {
     this->r = r;
     this->g = g;
     this->b = b;

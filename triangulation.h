@@ -7,28 +7,26 @@
 #include <vector>
 #include <list>
 #include <algorithm>
-#include <utility>
 
 #include "point.h"
+#include "line.h"
 
-template <typename T>
-struct triangle2 {
-    std::vector<point2<T>*> vertices;
-};
-
-enum side {
-    left = 0,
-    right = 1
-};
+namespace {
+	enum side {
+		left = 0,
+		right = 1
+	};
+}
 
 template <typename T>
 static side get_side(
-    const point2<T> &start,
-    const point2<T> &end,
+    const line2<T> &line,
     const point2<T> &point)
 {
-    T value = (point.x - start.x) * (end.y - start.y) -
-        (point.y - start.y) * (end.x - start.x);
+    T value = (point.getX() - line.getFirst().getX()) *
+		(line.getSecond().getY() - line.getFirst().getY()) -
+        (point.getY() - line.getFirst().getY()) *
+		(line.getSecond().getX() - line.getFirst().getX());
     return value <= 0 ? side::left : side::right;
 }
 
@@ -59,112 +57,81 @@ static typename std::list<T>::iterator prev_iter(
 }
 
 template <typename T>
-void draw_triangles(const std::vector<triangle2<T>*> *triangles) {
+void draw_lines(const std::vector<line2<T>> &lines) {
     glBegin(GL_LINES);
-    for (const auto &t : *triangles) {
-        auto v = t->vertices;
-        glVertex2f(v[0]->x, v[0]->y);
-        glVertex2f(v[1]->x, v[1]->y);
-        glVertex2f(v[1]->x, v[1]->y);
-        glVertex2f(v[2]->x, v[2]->y);
-        glVertex2f(v[2]->x, v[2]->y);
-        glVertex2f(v[0]->x, v[0]->y);
+    for (const auto &line : lines) {
+		glVertex2f(line.getFirst().getX(), line.getFirst().getY());
+		glVertex2f(line.getSecond().getX(), line.getSecond().getY());
     }
     glEnd();
 }
 
 template <typename T>
-static bool operator==(
-    const std::pair<point2<T>*, point2<T>*> &left,
-    const std::pair<point2<T>*, point2<T>*> &right)
-{
-    if (left.first->x == right.first->x &&
-        left.first->y == right.first->y &&
-        left.second->x == right.second->x &&
-        left.second->y == right.second->y)
-    {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-template <typename T>
-std::vector<triangle2<T>*> *triangulate(
+std::vector<line2<T>> *triangulate(
     std::vector<point2<T>> &points)
 {
-    typedef std::pair<point2<T>*, point2<T>*> line2;
-
     if (points.size() < 3) return nullptr;
 
     std::sort(points.begin(), points.end());
 
-    auto result = new std::vector<triangle2<T>*>;
-    std::list<line2> hull;
+    auto result = new std::vector<line2<T>>;
+    std::list<line2<T>> hull;
 
-    auto first_triangle = new triangle2<T>;
-    if (get_side(points[0], points[1], points[2]) == side::left) {
-        first_triangle->vertices.push_back(&points[0]);
-        first_triangle->vertices.push_back(&points[1]);
-        first_triangle->vertices.push_back(&points[2]);
-        hull.push_back(line2(&points[0], &points[1]));
-        hull.push_back(line2(&points[1], &points[2]));
-        hull.push_back(line2(&points[2], &points[0]));
+    if (get_side(line2<T>(points[0], points[1]), points[2]) == side::left) {
+        hull.push_back(line2<T>(points[0], points[1]));
+        hull.push_back(line2<T>(points[1], points[2]));
+        hull.push_back(line2<T>(points[2], points[0]));
     } else {
-        first_triangle->vertices.push_back(&points[1]);
-        first_triangle->vertices.push_back(&points[0]);
-        first_triangle->vertices.push_back(&points[2]);
-        hull.push_back(line2(&points[1], &points[0]));
-        hull.push_back(line2(&points[0], &points[2]));
-        hull.push_back(line2(&points[2], &points[1]));
+        hull.push_back(line2<T>(points[1], points[0]));
+        hull.push_back(line2<T>(points[0], points[2]));
+        hull.push_back(line2<T>(points[2], points[1]));
     }
-    result->push_back(first_triangle);
+	result->push_back(line2<T>(points[0], points[1]));
+	result->push_back(line2<T>(points[1], points[2]));
+	result->push_back(line2<T>(points[2], points[0]));
 
     for (size_t i = 3; i < points.size(); i++) {
         auto it = hull.begin();
         while (true) {
-            if (side::right == get_side(*it->first, *it->second, points[i])) {
-                auto new_triangle = new triangle2<T>;
-                new_triangle->vertices.push_back(it->first);
-                new_triangle->vertices.push_back(&points[i]);
-                new_triangle->vertices.push_back(it->second);
-                result->push_back(new_triangle);
+            if (side::right == get_side(*it, points[i])) {
+				result->push_back(line2<T>(it->getFirst(), points[i]));
+				result->push_back(line2<T>(points[i], it->getSecond()));
 
-                auto top_line = line2(&points[i], it->second);
-                auto bottom_line = line2(it->first, &points[i]);
+                auto top_line = line2<T>(points[i], it->getSecond());
+                auto bottom_line = line2<T>(it->getFirst(), points[i]);
 
-                auto top_line_r = line2(it->second, &points[i]);
-                auto bottom_line_r = line2(&points[i], it->first);
+                auto top_line_r = line2<T>(it->getSecond(), points[i]);
+                auto bottom_line_r = line2<T>(points[i], it->getFirst());
 
-                it = prev_iter<line2>(it, hull.begin(), hull.end());
+                it = prev_iter<line2<T>>(it, hull.begin(), hull.end());
                 if (*it == bottom_line_r)
                 {
                     if ((it = hull.erase(it)) == hull.end()) {
                         it = hull.begin();
                     }
                 } else {
-                    it = next_iter<line2>(it, hull.begin(), hull.end());
+                    it = next_iter<line2<T>>(it, hull.begin(), hull.end());
                     it = hull.insert(it, bottom_line);
-                    it = next_iter<line2>(it, hull.begin(), hull.end());
+                    it = next_iter<line2<T>>(it, hull.begin(), hull.end());
                 }
 
-                it = next_iter<line2>(it, hull.begin(), hull.end());
+                it = next_iter<line2<T>>(it, hull.begin(), hull.end());
                 if (*it == top_line_r)
                 {
                     if ((it = hull.erase(it)) == hull.end()) {
                         it = hull.begin();
                     }
-                    it = prev_iter<line2>(it, hull.begin(), hull.end());
+                    it = prev_iter<line2<T>>(it, hull.begin(), hull.end());
                 } else {
                     it = hull.insert(it, top_line);
-                    it = prev_iter<line2>(it, hull.begin(), hull.end());
+                    it = prev_iter<line2<T>>(it, hull.begin(), hull.end());
                 }
 
                 if ((it = hull.erase(it)) == hull.end()) {
                     it = hull.begin();
                 }
             }
-            it = next_iter<line2>(it, hull.begin(), hull.end());
+            it = next_iter<line2<T>>(it, hull.begin(), hull.end());
             if (it == hull.begin()) {
                 break;
             }

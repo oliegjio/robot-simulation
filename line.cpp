@@ -1,10 +1,9 @@
 #include "line.h"
 
 template <typename T>
-line2<T>::line2(const point2<T> &first, const point2<T> &second) {
-	this->first = first;
-	this->second = second;
-}
+line2<T>::line2(const point2<T> &first, const point2<T> &second)
+	: first(first)
+	, second(second) {}
 
 template <typename T>
 point2<T> line2<T>::getFirst() const {
@@ -34,3 +33,6 @@ bool line2<T>::operator==(const line2<T> &other) {
 		return false;
 	}
 }
+
+template class line2<int>;
+template class line2<float>;
