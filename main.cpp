@@ -27,7 +27,7 @@ static void setup() {
     shape4->set_color(0, 1, 1);
     points = shape4->get_points();
 
-	lines = triangulate(points);
+	lines = triangulation<int>::triangulate(points);
 
     shapes.push_back(shape3);
     shapes.push_back(shape1);
@@ -44,7 +44,7 @@ static void display() {
     }
 
 	glColor3f(0, 0, 0);
-	draw_lines(*lines);
+	triangulation<int>::draw_lines(*lines);
 
     glPointSize(4);
     glColor3f(1, 0, 1);
