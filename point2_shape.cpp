@@ -139,6 +139,11 @@ point2<T> point2_shape<T>::get_center() const {
 }
 
 template <typename T>
+size_t point2_shape<T>::size() const {
+	return points.size();
+}
+
+template <typename T>
 std::vector<point2<T>> *point2_shape<T>::get_center_vectors() const {
     auto vectors = new std::vector<point2<T>>;
     vectors->reserve(points.size());

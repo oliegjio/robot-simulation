@@ -44,6 +44,8 @@ public:
     std::vector<point2<T>> get_points() const;
 	void set_points(const std::vector<point2<T>> &points);
 
+	size_t size() const;
+
 private:
     point2_shape();
 

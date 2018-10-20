@@ -8,6 +8,7 @@ set(MY_SOURCES
     "rnd.cpp"
 	"triangulation.cpp"
 	"line.cpp"
+	"line2_shape.cpp"
 )
 
 set(MY_HEADERS
@@ -17,6 +18,7 @@ set(MY_HEADERS
     "rnd.h"
 	"triangulation.h"
 	"line.h"
+	"line2_shape.h"
 
 	"circular_list.h"
 )

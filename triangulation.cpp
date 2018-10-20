@@ -1,10 +1,7 @@
 #include "triangulation.h"
 
-#ifdef _WIN32
-	#include <windows.h>
-#endif
-#include <GL/glut.h>
 #include <algorithm>
+#include <vector>
 
 #include "circular_list.h"
 
@@ -21,24 +18,15 @@ side triangulation<T>::get_side(
 }
 
 template <typename T>
-void triangulation<T>::draw_lines(const std::vector<line2<T>> &lines) {
-	glBegin(GL_LINES);
-	for (const auto &line : lines) {
-		glVertex2f(line.getFirst().getX(), line.getFirst().getY());
-		glVertex2f(line.getSecond().getX(), line.getSecond().getY());
-	}
-	glEnd();
-}
-
-template <typename T>
-std::vector<line2<T>> *triangulation<T>::triangulate(
-	std::vector<point2<T>> &points)
+line2_shape<T> *triangulation<T>::triangulate(const point2_shape<T> &shape)
 {
-	if (points.size() < 3) return nullptr;
+	if (shape.size() < 3) return nullptr;
+
+	auto points = shape.get_points();
 
 	std::sort(points.begin(), points.end());
 
-	auto result = new std::vector<line2<T>>;
+	auto lines = new std::vector<line2<T>>;
 	std::list<line2<T>> hull;
 
 	if (get_side(line2<T>(points[0], points[1]), points[2]) == side::left) {
@@ -51,16 +39,16 @@ std::vector<line2<T>> *triangulation<T>::triangulate(
 		hull.push_back(line2<T>(points[0], points[2]));
 		hull.push_back(line2<T>(points[2], points[1]));
 	}
-	result->push_back(line2<T>(points[0], points[1]));
-	result->push_back(line2<T>(points[1], points[2]));
-	result->push_back(line2<T>(points[2], points[0]));
+	lines->push_back(line2<T>(points[0], points[1]));
+	lines->push_back(line2<T>(points[1], points[2]));
+	lines->push_back(line2<T>(points[2], points[0]));
 
 	for (size_t i = 3; i < points.size(); i++) {
 		auto it = hull.begin();
 		while (true) {
 			if (side::right == get_side(*it, points[i])) {
-				result->push_back(line2<T>(it->getFirst(), points[i]));
-				result->push_back(line2<T>(points[i], it->getSecond()));
+				lines->push_back(line2<T>(it->getFirst(), points[i]));
+				lines->push_back(line2<T>(points[i], it->getSecond()));
 
 				auto top_line = line2<T>(points[i], it->getSecond());
 				auto bottom_line = line2<T>(it->getFirst(), points[i]);
@@ -105,7 +93,7 @@ std::vector<line2<T>> *triangulation<T>::triangulate(
 		}
 	}
 
-	return result;
+	return new line2_shape<T>(*lines);
 }
 
 template class triangulation<int>;

@@ -10,7 +10,7 @@ float dt = 0;
 std::vector<point2i_shape*> shapes;
 
 auto points = std::vector<point2i>();
-std::vector<line2i> *lines;
+line2_shape<int> *lines;
 
 static void setup() {
     auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
@@ -25,9 +25,8 @@ static void setup() {
 
     auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 25, 50);
     shape4->set_color(0, 1, 1);
-    points = shape4->get_points();
 
-	lines = triangulation<int>::triangulate(points);
+	lines = triangulation<int>::triangulate(*shape4);
 
     shapes.push_back(shape3);
     shapes.push_back(shape1);
@@ -43,8 +42,8 @@ static void display() {
         shape->draw();
     }
 
-	glColor3f(0, 0, 0);
-	triangulation<int>::draw_lines(*lines);
+	lines->set_color(0, 0, 0);
+	lines->draw();
 
     glPointSize(4);
     glColor3f(1, 0, 1);

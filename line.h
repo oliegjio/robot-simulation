@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "point.h"
 
 template <typename T>
