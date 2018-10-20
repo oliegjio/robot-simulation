@@ -3,39 +3,39 @@
 #include <iostream>
 
 template <typename T>
-point2<T>::point2(const T &x, const T &y) {
+point<T>::point(const T &x, const T &y) {
     this->x = x;
     this->y = y;
 }
 
 template <typename T>
-point2<T>::point2(const point2 &other) {
+point<T>::point(const point &other) {
     x = other.x;
     y = other.y;
 }
 
 template <typename T>
-T point2<T>::getX() const {
+T point<T>::getX() const {
 	return x;
 }
 
 template <typename T>
-T point2<T>::getY() const {
+T point<T>::getY() const {
 	return y;
 }
 
 template <typename T>
-void point2<T>::setX(const T &x) {
+void point<T>::setX(const T &x) {
 	this->x = x;
 }
 
 template <typename T>
-void point2<T>::setY(const T &y) {
+void point<T>::setY(const T &y) {
 	this->y = y;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator=(const point2<T> &other) {
+point<T> &point<T>::operator=(const point<T> &other) {
 	if (this == &other) {
 		return *this;
 	}
@@ -45,103 +45,103 @@ point2<T> &point2<T>::operator=(const point2<T> &other) {
 }
 
 template <typename T>
-point2<T> point2<T>::operator+(const point2<T> &other) const {
-    return point2<T>(x + other.x, y + other.y);
+point<T> point<T>::operator+(const point<T> &other) const {
+    return point<T>(x + other.x, y + other.y);
 }
 
 template <typename T>
-point2<T> point2<T>::operator-(const point2<T> &other) const {
-    return point2<T>(x - other.x, y - other.y);
+point<T> point<T>::operator-(const point<T> &other) const {
+    return point<T>(x - other.x, y - other.y);
 }
 
 template <typename T>
-point2<T> point2<T>::operator/(const point2<T> &other) const {
-	return point2<T>(x / other.x, y / other.y);
+point<T> point<T>::operator/(const point<T> &other) const {
+	return point<T>(x / other.x, y / other.y);
 }
 
 template <typename T>
-point2<T> point2<T>::operator*(const point2<T> &other) const {
-    return point2<T>(x * other.x, y * other.y);
+point<T> point<T>::operator*(const point<T> &other) const {
+    return point<T>(x * other.x, y * other.y);
 }
 
 template <typename T>
-point2<T> point2<T>::operator+(const T &number) const {
-    return point2<T>(x + number, y + number);
+point<T> point<T>::operator+(const T &number) const {
+    return point<T>(x + number, y + number);
 }
 
 template <typename T>
-point2<T> point2<T>::operator-(const T &number) const {
-    return point2<T>(x - number, y - number);
+point<T> point<T>::operator-(const T &number) const {
+    return point<T>(x - number, y - number);
 }
 
 template <typename T>
-point2<T> point2<T>::operator*(const T &number) const {
-    return point2<T>(x * number, y * number);
+point<T> point<T>::operator*(const T &number) const {
+    return point<T>(x * number, y * number);
 }
 
 template <typename T>
-point2<T> point2<T>::operator/(const T &number) const {
-    return point2<T>(x / number, y / number);
+point<T> point<T>::operator/(const T &number) const {
+    return point<T>(x / number, y / number);
 }
 
 template <typename T>
-point2<T> &point2<T>::operator+=(const point2<T> &other) {
+point<T> &point<T>::operator+=(const point<T> &other) {
 	x += other.x;
 	y += other.y;
 	return *this;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator-=(const point2<T> &other) {
+point<T> &point<T>::operator-=(const point<T> &other) {
 	x -= other.x;
 	y -= other.y;
 	return *this;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator*=(const point2<T> &other) {
+point<T> &point<T>::operator*=(const point<T> &other) {
 	x *= other.x;
 	y *= other.y;
 	return *this;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator/=(const point2<T> &other) {
+point<T> &point<T>::operator/=(const point<T> &other) {
 	x /= other.x;
 	y /= other.y;
 	return *this;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator+=(const T &number) {
+point<T> &point<T>::operator+=(const T &number) {
     x += number;
     y += number;
     return *this;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator-=(const T &number) {
+point<T> &point<T>::operator-=(const T &number) {
     x -= number;
     y -= number;
     return *this;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator*=(const T &number) {
+point<T> &point<T>::operator*=(const T &number) {
     x *= number;
     y *= number;
     return *this;
 }
 
 template <typename T>
-point2<T> &point2<T>::operator/=(const T &number) {
+point<T> &point<T>::operator/=(const T &number) {
     x /= number;
     y /= number;
     return *this;
 }
 
 template <typename T>
-bool point2<T>::operator==(const point2<T> &other) const {
+bool point<T>::operator==(const point<T> &other) const {
     if (x == other.x && y == other.y) {
         return true;
     } else {
@@ -150,7 +150,7 @@ bool point2<T>::operator==(const point2<T> &other) const {
 }
 
 template <typename T>
-bool point2<T>::operator<(const point2<T> &other) const {
+bool point<T>::operator<(const point<T> &other) const {
     if (x < other.x) {
         return true;
     } else if (x > other.x) {
@@ -165,7 +165,7 @@ bool point2<T>::operator<(const point2<T> &other) const {
 }
 
 template <typename T>
-bool point2<T>::operator>(const point2<T> &other) const {
+bool point<T>::operator>(const point<T> &other) const {
     if (x > other.x) {
         return true;
     } else if (x > other.x) {
@@ -180,9 +180,9 @@ bool point2<T>::operator>(const point2<T> &other) const {
 }
 
 template <typename T>
-void point2<T>::print() const {
+void point<T>::print() const {
 	std::cout << "(" << x << ", " << y << ")" << std::endl;
 }
 
-template class point2<int>;
-template class point2<float>;
+template class point<int>;
+template class point<float>;

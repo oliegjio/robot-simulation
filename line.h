@@ -5,21 +5,21 @@
 #include "point.h"
 
 template <typename T>
-class line2 {
+class line {
 public:
-	line2(const point2<T> &first, const point2<T> &second);
+	line(const point<T> &first, const point<T> &second);
 
-	point2<T> getFirst() const;
-	point2<T> getSecond() const;
-	void setFirst(const point2<T> &first);
-	void setSecond(const point2<T> &second);
+	point<T> getFirst() const;
+	point<T> getSecond() const;
+	void setFirst(const point<T> &first);
+	void setSecond(const point<T> &second);
 
-	bool operator==(const line2<T> &other);
+	bool operator==(const line<T> &other);
 
 private:
-	point2<T> first;
-	point2<T> second;
+	point<T> first;
+	point<T> second;
 };
 
-typedef line2<int> line2i;
-typedef line2<float> line2f;
+typedef line<int> line2i;
+typedef line<float> line2f;

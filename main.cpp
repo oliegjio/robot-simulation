@@ -7,23 +7,23 @@ clock_t current_time = clock();
 clock_t last_time = current_time;
 float dt = 0;
 
-std::vector<point2i_shape*> shapes;
+std::vector<point_shape_i*> shapes;
 
 auto points = std::vector<point2i>();
-line2_shape<int> *lines;
+line_shape<int> *lines;
 
 static void setup() {
-    auto shape1 = point2i_shape::make_rectangle(150, 150, 50, 50);
+    auto shape1 = point_shape_i::make_rectangle(150, 150, 50, 50);
     shape1->rotate(0.3);
     shape1->set_color(1, 0, 0);
 
-    auto shape2 = point2i_shape::make_circle(30, 30, 180);
+    auto shape2 = point_shape_i::make_circle(30, 30, 180);
     shape2->set_color(0, 1, 0);
 
-    auto shape3 = point2i_shape::minkowski_sum(*shape2, *shape1);
+    auto shape3 = point_shape_i::minkowski_sum(*shape2, *shape1);
     shape3->set_color(0, 0, 1);
 
-    auto shape4 = point2i_shape::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 25, 50);
+    auto shape4 = point_shape_i::make_random(0, 0, WIN_WIDTH, WIN_HEIGHT, 25, 50);
     shape4->set_color(0, 1, 1);
 
 	lines = triangulation<int>::triangulate(*shape4);

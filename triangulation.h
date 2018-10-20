@@ -1,7 +1,7 @@
 #pragma once
 
-#include "point2_shape.h"
-#include "line2_shape.h"
+#include "point_shape.h"
+#include "line_shape.h"
 
 namespace {
 	enum side {
@@ -13,8 +13,8 @@ namespace {
 template <typename T>
 class triangulation {
 public:
-	static line2_shape<T> *triangulate(const point2_shape<T> &shape);
+	static line_shape<T> *triangulate(const point_shape<T> &shape);
 
 private:
-	static side get_side(const line2<T> &line, const point2<T> &point);
+	static side get_side(const line<T> &line, const point<T> &point);
 };

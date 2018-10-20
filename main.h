@@ -5,6 +5,6 @@
 #include <ctime>
 #include <vector>
 
-#include "point2_shape.h"
-#include "line2_shape.h"
- #include "triangulation.h"
+#include "point_shape.h"
+#include "line_shape.h"
+#include "triangulation.h"

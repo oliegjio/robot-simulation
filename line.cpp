@@ -1,32 +1,32 @@
 #include "line.h"
 
 template <typename T>
-line2<T>::line2(const point2<T> &first, const point2<T> &second)
+line<T>::line(const point<T> &first, const point<T> &second)
 	: first(first)
 	, second(second) {}
 
 template <typename T>
-point2<T> line2<T>::getFirst() const {
+point<T> line<T>::getFirst() const {
 	return first;
 }
 
 template <typename T>
-point2<T> line2<T>::getSecond() const {
+point<T> line<T>::getSecond() const {
 	return second;
 }
 
 template <typename T>
-void line2<T>::setFirst(const point2<T> &first) {
+void line<T>::setFirst(const point<T> &first) {
 	this->first = first;
 }
 
 template <typename T>
-void line2<T>::setSecond(const point2<T> &second) {
+void line<T>::setSecond(const point<T> &second) {
 	this->second = second;
 }
 
 template <typename T>
-bool line2<T>::operator==(const line2<T> &other) {
+bool line<T>::operator==(const line<T> &other) {
 	if (first == other.first && second == other.second) {
 		return true;
 	} else {
@@ -34,5 +34,5 @@ bool line2<T>::operator==(const line2<T> &other) {
 	}
 }
 
-template class line2<int>;
-template class line2<float>;
+template class line<int>;
+template class line<float>;

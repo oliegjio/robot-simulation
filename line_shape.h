@@ -5,9 +5,9 @@
 #include "line.h"
 
 template <typename T>
-class line2_shape {
+class line_shape {
 public:
-	line2_shape(const std::vector<line2<T>> &lines);
+	line_shape(const std::vector<line<T>> &lines);
 
 	void draw() const;
 
@@ -18,8 +18,8 @@ private:
 	float g = 0;
 	float b = 0;
 
-	std::vector<line2<T>> lines;
+	std::vector<line<T>> lines;
 };
 
-typedef line2_shape<int> line2i_shape;
-typedef line2_shape<float> line2f_shape;
+typedef line_shape<int> line2i_shape;
+typedef line_shape<float> line2f_shape;

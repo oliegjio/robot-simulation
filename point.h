@@ -1,41 +1,41 @@
 #pragma once
 
 template <typename T>
-class point2 {
+class point {
 public:
-    point2(const T &x, const T &y);
-    point2(const point2 &other);
+    point(const T &x, const T &y);
+    point(const point &other);
 
 	T getX() const;
 	T getY() const;
 	void setX(const T &x);
 	void setY(const T &y);
 
-	point2<T> &operator=(const point2<T> &other);
+	point<T> &operator=(const point<T> &other);
 
-    point2<T> operator+(const point2<T> &other) const;
-    point2<T> operator-(const point2<T> &other) const;
-    point2<T> operator/(const point2<T> &other) const;
-    point2<T> operator*(const point2<T> &other) const;
+    point<T> operator+(const point<T> &other) const;
+    point<T> operator-(const point<T> &other) const;
+    point<T> operator/(const point<T> &other) const;
+    point<T> operator*(const point<T> &other) const;
 
-	point2<T> operator+(const T &number) const;
-	point2<T> operator-(const T &number) const;
-	point2<T> operator*(const T &number) const;
-	point2<T> operator/(const T &number) const;
+	point<T> operator+(const T &number) const;
+	point<T> operator-(const T &number) const;
+	point<T> operator*(const T &number) const;
+	point<T> operator/(const T &number) const;
 
-    point2<T> &operator+=(const point2<T> &other);
-    point2<T> &operator-=(const point2<T> &other);
-	point2<T> &operator*=(const point2<T> &other);
-    point2<T> &operator/=(const point2<T> &other);
+    point<T> &operator+=(const point<T> &other);
+    point<T> &operator-=(const point<T> &other);
+	point<T> &operator*=(const point<T> &other);
+    point<T> &operator/=(const point<T> &other);
 
-    point2<T> &operator+=(const T &number);
-    point2<T> &operator-=(const T &number);
-    point2<T> &operator*=(const T &number);
-    point2<T> &operator/=(const T &number);
+    point<T> &operator+=(const T &number);
+    point<T> &operator-=(const T &number);
+    point<T> &operator*=(const T &number);
+    point<T> &operator/=(const T &number);
 
-    bool operator==(const point2<T> &other) const;
-    bool operator<(const point2<T> &other) const;
-    bool operator>(const point2<T> &other) const;
+    bool operator==(const point<T> &other) const;
+    bool operator<(const point<T> &other) const;
+    bool operator>(const point<T> &other) const;
 
     void print() const;
 
@@ -44,5 +44,5 @@ private:
 	T y;
 };
 
-typedef point2<int> point2i;
-typedef point2<float> point2f;
+typedef point<int> point2i;
+typedef point<float> point2f;
